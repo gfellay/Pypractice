@@ -151,6 +151,38 @@
 import string
 import secrets
 import pyperclip
+def calculate_strength(pasw):
+    digit=False
+    upper=False
+    lower=False
+    symbol=False
+
+    for i in pasw:
+        if i.isdigit():
+            digit=True
+        if i.isupper():
+            upper=True
+        if i.islower():
+            lower=True
+        if i in string.punctuation:
+            symbol=True
+    strong=0
+    if digit==True:
+        strong+=1
+    if upper==True:
+        strong+=1
+    if lower==True:
+        strong+=1
+    if symbol==True:
+        strong+=1
+
+    if strong<2:
+        print("La contraseña es débil")
+    elif strong==2:
+        print("La contraseña es media")
+    else:
+        print("La contraseña es fuerte")
+
 
 def Generar(l,m,mm,s,n):
     diccionario =""
@@ -173,6 +205,10 @@ def Generar(l,m,mm,s,n):
         diccionario=diccionario+string.punctuation
     
     pasw="".join(secrets.choice(diccionario) for _ in range(l))
+    
+    calculate_strength(pasw)
+
+
     return pasw
   
     
@@ -184,8 +220,8 @@ print("Generador de contraseñas")
 while True:
     while True:
         largo=int(input("Indique la longitud de la contraseña "))
-        if largo < 4:
-            print("indique un valor mayor a 4")
+        if largo < 5:
+            print("indique un valor mayor a 6")
         else:
             break
 
@@ -239,7 +275,10 @@ while True:
             else:
                 sim=True
         elif menu==5:
-            break
+            if(min==False and may==False and num==False and sim==False):
+                print("Debe seleccionar al menos un tipo de carácter")
+            else:
+                break
         else:
             print(" Opcion no valida ")
 
